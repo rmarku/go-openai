@@ -259,7 +259,7 @@ type ChatCompletionRequest struct {
 	// https://platform.openai.com/docs/api-reference/chat/create#chat-create-store
 	Store bool `json:"store,omitempty"`
 	// Metadata to store with the completion.
-	Metadata map[string]string `json:"metadata,omitempty"`
+	Metadata map[string]any `json:"metadata,omitempty"`
 }
 
 type StreamOptions struct {

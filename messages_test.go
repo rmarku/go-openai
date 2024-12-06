@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"reflect"
 	"testing"
 
 	"github.com/sashabaranov/go-openai"
@@ -233,11 +234,18 @@ func TestMessages(t *testing.T) {
 	}
 
 	msg, err = client.ModifyMessage(ctx, threadID, messageID,
-		map[string]string{
+		map[string]any{
 			"foo": "bar",
+			"arr": []string{
+				"arr1",
+				"arr2",
+			},
 		})
 	checks.NoError(t, err, "ModifyMessage error")
 	if msg.Metadata["foo"] != "bar" {
+		t.Fatalf("expected message metadata to get modified")
+	}
+	if !reflect.DeepEqual(msg.Metadata["arr"], []any{"arr1", "arr2"}) {
 		t.Fatalf("expected message metadata to get modified")
 	}
 
